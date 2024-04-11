@@ -1,0 +1,184 @@
+start game :
+
+HP = 100%
+Combo = 0
+Score = 0
+
+Timing conditions and attributed Score :
+
+Miss late (+1s) : 0
+Miss early (-1s) : 0
+Too late (+0.5s) : 50
+Too early (-0.5s) : 50
+Late (+0.2s) : 100
+Early (-0.2s) : 100
+Perfect (between +- 0.2s) : 300
+
+
+if (circle is clicked && timing is not miss early||late) {
+    combo +1
+    comboMultiplicator = combo * 0.1
+    if (Timing is too late || too early) {
+        HP -5%
+        Score +50 + comboMultiplicator
+    }
+    if (Timing is late || early) {
+        HP -1%
+        Score +100 + comboMultiplicator
+    }
+    if (Timing is Perfect) {
+        HP +5%
+        Score +300 + comboMultiplicator
+    } 
+    
+} else {
+    HP -10%
+    Score +0
+    Combo = 0
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  var circles = [
+    {delay : 0.2, number: 1},
+    {delay : 0.8, number: 2},
+    {delay : 1.0, number: 3},
+    {delay : 1.5, number: 1},
+    {delay : 1.9, number: 1},
+    {delay : 2.2, number: 2},
+    {delay : 2.6, number: 1},
+    {delay : 3.0, number: 1},
+    {delay : 3.6, number: 1}
+  ]
+  const game = document.querySelector('.game');
+  function createCircle(delay, number) {
+    setTimeout(function() {
+      let circle = document.createElement('div');
+      var timingCircle = document.createElement('div');
+      circle.className = 'currentCircle';
+      circle.innerHTML = number;
+      timingCircle.className = 'timingCircle';
+      game.appendChild(circle);
+      circle.appendChild(timingCircle);
+    }, delay * 1000); // Convert delay to milliseconds
+  }
+
+    // Create circles for each object in the array
+    
+  const startButton = document.querySelector('.start');
+  startButton.addEventListener('click', function() {
+    circles.forEach(function(circle) {
+      createCircle(circle.delay, circle.number);
+    });
+  })
+
+
+    let healthBar = 100;
+    let combo = 0;
+    let score = 0;
+    const circle = document.querySelectorAll('.currentCircle');
+    var keyPressed = false;
+    var startTime;
+    const scoreLayout = document.getElementById('score');
+    const comboLayout = document.getElementById('combo');
+
+    let formattedScore = score.toString().padStart(8,"0")
+    scoreLayout.innerHTML = formattedScore
+
+    circle.addEventListener("mouseenter", () => {
+        circle.focus();
+        console.log('hover')
+    })
+    circle.addEventListener("mouseleave", () => {
+        circle.blur();
+    })
+
+    function handleCircleClick () {
+        function timingEvents (timeElapsed) {
+            switch (true) {
+                case (timeElapsed < 0.5):
+                    console.log("Early Miss")
+                    combo = 0;
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                case (timeElapsed < 0.7):
+                    console.log("Early Meh");
+                    score = score + 50 + combo * 2;
+                    console.log("score:" + score);
+                    combo++;
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                case (timeElapsed < 0.9):
+                    console.log("Early Good");
+                    score = score + 100 + combo * 2;
+                    console.log("score:" + score);
+                    combo++;
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                case (timeElapsed < 1.1):
+                    console.log("Perfect");
+                    score = score + 300 + combo * 2;
+                    console.log("score:" + score);
+                    combo++;
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                case (timeElapsed < 1.3):
+                    console.log("Late Good");
+                    score = score + 100 + combo * 2;
+                    console.log("score:" + score);
+                    combo++;
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                case (timeElapsed < 1.5):
+                    console.log("Late Meh");
+                    score = score + 50 + combo * 2;
+                    console.log("score:" + score);
+                    combo++;
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                case (timeElapsed >= 1.5):
+                    console.log("Late Miss");
+                    combo = 0
+                    console.log("combo " + "x"+combo)
+                    circle.style.display = "none";
+                    break;
+                }
+        }
+        var clickTime = new Date().getTime() - startTime;
+        timingEvents(clickTime / 1000);
+        keyPressed = true;
+        let formattedScore = score.toString().padStart(8,"0")
+        scoreLayout.innerHTML = formattedScore;
+        comboLayout.innerHTML = "x" + combo
+    }
+
+    // Simulate the element appearing on the screen
+    setTimeout(function() {
+      // Check if a key was pressed during the time
+      if (keyPressed) {
+      } else {
+        circle.style.display = "none";
+        combo = 0;
+        comboLayout.innerHTML = ""
+      }
+    }, 1500); // Adjust the time as needed
+
+    circle.addEventListener('keypress', handleCircleClick);
+    circle.addEventListener('click', handleCircleClick);
+
+    startTime = new Date().getTime();
+
+
+
+    
+})
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>!Uso Web - Game Test</title>
+    <link rel="icon" href="/img/uso_logo.png" />
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="healthbar">
+      <div class="health" id="healthbar"></div>
+    </div>
+    <div id="score">00000000</div>
+    <div id="combo"></div>
+  </header>
+  <main>
+    <audio src="/music/millennia.mp3" id="song" autoplay muted></audio>
+    <div class="waiting-overlay" id="waitingOverlay">
+      <img src="/img/wutheringwaves_galley1690743797887.jpeg" alt="">
+      <h1 class="song-name">Millennia</h1>
+      <p class="artist-name">by Pixel Terror</p>
+    </div>
+    <div id="countdown"></div>
+    <div class="ending-overlay">
+      <div class="ending-content">
+        <div class="rank"></div>
+        <div class="final-score"></div>
+      </div>
+    </div>
+    <div class="game"></div>
+  </main>
+  <footer></footer>
+</body>
+<script src="/scripts/circleClick.js"></script>
+<script src="/scripts/mouseTrail.js"></script>
+</html>

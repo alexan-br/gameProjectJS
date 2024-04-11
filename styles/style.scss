@@ -1,0 +1,156 @@
+@import 'components/circle';
+
+body {
+    margin: 0;
+    color: #EEEEEE;
+    font-family: 'Inter', 'sans-serif';
+    overflow: hidden;
+    cursor: url("/img/uso_cursor_v1.png"), auto !important;
+    position: relative;
+    .dot {
+        position: absolute;
+        top: 0;
+        width: 20px; /* Adjust size as desired */
+        height: 20px; /* Adjust size as desired */
+        background-color: rgba(255, 255, 255, 0.6); /* Adjust color and opacity */
+        border-radius: 50%;
+        pointer-events: none; /* Ensures the element doesn't interfere with mouse events */
+    }
+    header {
+        > * {
+            position: absolute;
+        }
+        .healthbar {
+            width: 35%;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #690c33;
+            top: 20px;
+            left: 20px;
+            overflow: hidden;
+            .health {
+                height: 100%;
+                background-color: #EEEEEE;
+                transition: width 0.1s linear; /* adjust speed of health decrease */
+            }
+        }
+        
+        #score {
+            font-size: 35px;
+            right: 20px;
+            top: 10px;
+            letter-spacing: 0.1em;
+        }
+        #combo {
+            font-size: 60px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+    }
+    main {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), linear-gradient(117deg, #244C72 0.72%, #A3134F 100%);
+        .uso__logo {
+            transform-origin: center;
+            animation: 0.4s linear infinite beatInitial;
+            transition: all ease-in-out 0.5s;
+        }
+        .menu {
+            display: none;
+            opacity: 0;
+            transition: all 0.5s;
+            li{
+                font-size: 100px;
+                color: #EEEEEE;
+                font-weight: bold;
+                transform: scale(1);
+                transition: all ease-in-out 0.05s;
+                a {
+                    cursor: url("/img/uso_cursor_v1.png"), auto !important;
+                }
+                &:hover{
+                    transform: scale(1.1);
+                }
+            }
+        }
+        .waiting-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.400);
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            img{
+                width: 500px;
+                height: 150px;
+                border-radius: 20px;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+        #countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 450px;
+            font-weight: 700;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+@keyframes beatInitial {
+    0% {
+        transform: scale(1) translateX(0);
+    }
+    20% {
+        transform: scale(1.08) translateX(0);
+    }
+    22% {
+        transform: scale(1.05) translateX(0);
+    }
+    26% {
+        transform: scale(1.08) translateX(0);
+    }
+}
+@keyframes beat {
+    0% {
+        transform: scale(1) translateX(-50%);
+    }
+    20% {
+        transform: scale(1.08) translateX(-50%);
+    }
+    22% {
+        transform: scale(1.05) translateX(-50%);
+    }
+    26% {
+        transform: scale(1.08) translateX(-50%);
+    }
+}
+@keyframes menuShow {
+    from {
+        transform: translateX(0px);
+    }
+    to {
+        transform: translateX(10%);
+    }
+}
